@@ -8,6 +8,6 @@ app.set('views', __dirname + '/../public/views');
 app.use(express.static(__dirname + '/../public' ));
 
 app.get('/', function(req, res){
-  res.render(('../public/views/home.ejs'));
+  res.render((__dirname + '/../public/views/home.ejs'));
 });
 module.exports = app;
