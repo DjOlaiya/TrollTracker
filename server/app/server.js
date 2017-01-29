@@ -22,10 +22,6 @@ app.get('/', function(req, res){
   res.render((__dirname + '/../public/views/home.ejs'));
 });
 
-app.get('/results', function(req, res){
-  res.render((__dirname + '/../public/views/results.ejs'));
-});
-
 //Twitter authentications
 var client = new Twitter({
 
@@ -36,15 +32,18 @@ var client = new Twitter({
 
 });
 
-app.get('/:s', function(req, res) {
+app.get('/results', function(req, res) {
     var options = {
-        screen_name: req.params.s,
+        screen_name: req.query.user,
         exclude_replies: true,
         count: 200
     };
 
     var ret = [];
     client.get('statuses/user_timeline', options, function(err, data) {
+        if (data[0] == undefined) {
+            return res.send("No user found");
+        }
         var name = data[0].user.name;
         for (var i = 0; i < 5 && i < data.length; ++i) {
             ret.push({id: data[i].id, text: data[i].text});
