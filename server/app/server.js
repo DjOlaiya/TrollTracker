@@ -59,11 +59,10 @@ app.get('/:s', function(req, res) {
 
         //modify options
         options.count = 150;
-        options.sinceid = data[data.length - 1].id;
-        client.get('statuses/user_timeline', options, function(err, data) {
+        options.max_id = data[data.length - 1].id -1;
+        client.get('statuses/user_timeline', options, function(err, data2) {
 
-            tweets += extract_tweets(data);
-            console.log(tweets);
+            tweets += extract_tweets(data2);
             var obj = analyze.analyze_text(tweets);
 
             Promise.all(arr).then(function() {
@@ -78,9 +77,8 @@ app.get('/:s', function(req, res) {
 
 function extract_tweets(data) {
     var tweets = "";
-    for (var i = 0; i < data.length; i++) {
+    for (var i = 0; i < data.length; i++)
         tweets += data[i].text + "\n";
-    }
     return tweets;
 }
 
