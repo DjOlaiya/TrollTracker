@@ -20,7 +20,7 @@
       <% }%>
     </table>
     <table>
-      <tr>
+      <tr class='an_table_title'>
         <td>Name</td>
         <td>sentiment</td>
         <td>relevance</td>
@@ -32,7 +32,7 @@
       </tr>
         <% for (var i = 0; i < analysis.person.length; i++) {%>
         <% var person = analysis.person[i] %>
-      <tr>
+      <tr class='an_table_element'>
         <td><%= person.name %></td>
         <td><%= person.sentiment %></td>
         <td><%= person.relevance %></td>

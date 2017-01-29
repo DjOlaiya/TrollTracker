@@ -1,6 +1,6 @@
 var watson = require('watson-developer-cloud');
 var alchemy_language = watson.alchemy_language({
-  api_key: 'API_KEY'//add later
+  api_key: process.env.BLUEMIX_API_KEY//add later
 });
 
 module.exports.analyze_text = function(text) {
