@@ -1,6 +1,12 @@
-div.twit_img:before {
-  content:url(twitter_logo.png)
-}
+
 .twitter-searchbox {
   position: middle;
 }
+.twitter-area {
+  background: #EEEEEE;
+	height: 100%;
+	position: absolute;
+	text-align: center;
+	width: 100%;
+}
+
