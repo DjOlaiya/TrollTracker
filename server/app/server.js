@@ -75,14 +75,9 @@ app.get('/results', function(req, res) {
                 text: tweets
             };
 
-            console.log("something!!!-------------")
             alchemy_language.entities(parameters, function (err, response) {
-                console.log("==============================something else");
                 if (err)
                   console.log('error:', err);
-              else
-                  console.log(JSON.stringify(response, null, 2));
-
 
               Promise.all(arr).then(function() {
                 //res.json(obj);
