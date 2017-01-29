@@ -8,6 +8,41 @@
   <body>
     <header>
       <% include ./partials/header %>
+      <h1><%= name %></h1>
+      <h2><%= analysis.score %></h2>
     </header>
+    <table>
+    <% for (var i = 0; i < data.length; i++) {%>
+        <tr>
+          <td><%= data[i].text %></td>
+          <td><%= data[i].score.results.cyberbullying.likelihood %></td>
+        </tr>
+      <% }%>
+    </table>
+    <table>
+      <tr>
+        <td>Name</td>
+        <td>sentiment</td>
+        <td>relevance</td>
+        <td>anger</td>
+        <td>disgust</td>
+        <td>fear</td>
+        <td>joy</td>
+        <td>sadness</td>
+      </tr>
+        <% for (var i = 0; i < analysis.person.length; i++) {%>
+        <% var person = analysis.person[i] %>
+      <tr>
+        <td><%= person.name %></td>
+        <td><%= person.sentiment %></td>
+        <td><%= person.relevance %></td>
+        <td><%= person.emotions.anger %></td>
+        <td><%= person.emotions.disgust %></td>
+        <td><%= person.emotions.fear %></td>
+        <td><%= person.emotions.joy %></td>
+        <td><%= person.emotions.sadness %></td>
+      </tr>
+        <% }%>
+    </table>
   </body>
 </html>

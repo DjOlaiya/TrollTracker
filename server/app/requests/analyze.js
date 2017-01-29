@@ -3,7 +3,7 @@ var alchemy_language = watson.alchemy_language({
   api_key: 'API_KEY'//add later
 });
 
-function analyze_text(text) {
+module.exports.analyze_text = function(text) {
   //make call
   var text_json = request_analysis(text);
   //clean data
@@ -13,7 +13,7 @@ function analyze_text(text) {
 }
 
 function request_analysis(a_text) {
-  return require("./delete2.json");
+  return require("./../delete2.json");
   var parameters = {
     sentiment: 1,
     emotion: 1,
@@ -30,6 +30,9 @@ function request_analysis(a_text) {
 }
 
 function extract_analysis(text_json) {
+  var obj = {score:null, pos:0, neut:0, neg:0, person:[]};
+
+  /*
   var obj = {score:null, pos:0, neut:0, neg:0,
     sentiment:[],
     relevance:[],
@@ -43,6 +46,7 @@ function extract_analysis(text_json) {
       sadness:[]
     }
   };
+  */
 
   for (var i = 0, j = 0; i < text_json.entities.length; i++) {
     var entity = text_json.entities[i];
@@ -60,6 +64,21 @@ function extract_analysis(text_json) {
           break;
       }
       console.log(entity.text);
+      var person = {};
+      person.name = entity.text;
+      person.sentiment = entity.sentiment.type != "neutral" ? Number(entity.sentiment.score) : 0;
+      person.relevance = Number(entity.relevance);
+      person.count = Number(entity.count);
+      person.emotions = {};
+      person.emotions.anger   = Number(entity.emotions.anger);
+      person.emotions.disgust = Number(entity.emotions.disgust);
+      person.emotions.fear    = Number(entity.emotions.fear);
+      person.emotions.joy     = Number(entity.emotions.joy);
+      person.emotions.sadness = Number(entity.emotions.sadness);
+
+
+      /*
+
       obj.sentiment[j] = entity.sentiment.type != "neutral" ? Number(entity.sentiment.score) : 0;
       obj.relevance[j] = Number(entity.relevance);
       obj.count[j]     = Number(entity.count);
@@ -71,13 +90,16 @@ function extract_analysis(text_json) {
       obj.emotions.joy[j]     = Number(entity.emotions.joy);
       obj.emotions.sadness[j] = Number(entity.emotions.sadness);
       j++;
+      */
+
+      obj.person.push(person);
     }
   }
 
   var score = 0;
-  for (var i = 0; i < obj.sentiment.length; i++)
-    score += obj.sentiment[i];
-  score /= obj.sentiment.length;
+  for (var i = 0; i < obj.person.length; i++)
+    score += obj.person[i].sentiment;
+  score /= obj.person.length;
   obj.score = score;
   return obj;
 }
