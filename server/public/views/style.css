@@ -1,0 +1,6 @@
+div.twit_img:before {
+  content:url(twitter_logo.png)
+}
+.twitter-searchbox {
+  position: middle;
+}
