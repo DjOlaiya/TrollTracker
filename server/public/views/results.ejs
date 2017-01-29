@@ -1,48 +1,59 @@
 <!DOCTYPE html>
 
 <html>
-  <head>
+<head>
     <% include ./partials/head %>
-  </head> 
-  
-  <body>
-    <header>
-      <% include ./partials/header %>
-      <h1 class="name-text"><%= name %></h1>
-      <h2 class="score-text"><%= analysis.score %></h2>
-    </header>
+</head>
+
+<body>
+<header>
+    <% include ./partials/header %>
+
+</header>
+<div class="tab">
+    <h1 class="name-text"><%= name %></h1>
+    <h2>Score: <span class="score-text"><%= analysis.score %></span></h2>
+    <h3>Last five posts:</h3>
+
     <table>
-    <% for (var i = 0; i < data.length; i++) {%>
         <tr>
-          <td><%= data[i].text %></td>
-          <td><%= data[i].score.results.cyberbullying.likelihood %></td>
+            <th>Post</th>
+            <th>Bully prob.</th>
         </tr>
-      <% }%>
+        <% for (var i = 0; i < data.length; i++) { %>
+        <tr>
+            <td><%= data[i].text %></td>
+            <td><%= data[i].score.results.cyberbullying.likelihood %></td>
+        </tr>
+        <% } %>
     </table>
+
+    <h3>Overall sentiment:</h3>
     <table>
-      <tr>
-        <td>Name</td>
-        <td>sentiment</td>
-        <td>relevance</td>
-        <td>anger</td>
-        <td>disgust</td>
-        <td>fear</td>
-        <td>joy</td>
-        <td>sadness</td>
-      </tr>
-        <% for (var i = 0; i < analysis.person.length; i++) {%>
+        <tr>
+            <th>Name</th>
+            <th>sentiment</th>
+            <th>relevance</th>
+            <th>anger</th>
+            <th>disgust</th>
+            <th>fear</th>
+            <th>joy</th>
+            <th>sadness</th>
+        </tr>
+        <% for (var i = 0; i < analysis.person.length; i++) { %>
         <% var person = analysis.person[i] %>
-      <tr>
-        <td><%= person.name %></td>
-        <td><%= person.sentiment %></td>
-        <td><%= person.relevance %></td>
-        <td><%= person.emotions.anger %></td>
-        <td><%= person.emotions.disgust %></td>
-        <td><%= person.emotions.fear %></td>
-        <td><%= person.emotions.joy %></td>
-        <td><%= person.emotions.sadness %></td>
-      </tr>
-        <% }%>
+        <tr>
+            <td><%= person.name %></td>
+            <td><%= person.sentiment %></td>
+            <td><%= person.relevance %></td>
+            <td><%= person.emotions.anger %></td>
+            <td><%= person.emotions.disgust %></td>
+            <td><%= person.emotions.fear %></td>
+            <td><%= person.emotions.joy %></td>
+            <td><%= person.emotions.sadness %></td>
+        </tr>
+        <% } %>
     </table>
-  </body>
+</div>
+</body>
 </html>

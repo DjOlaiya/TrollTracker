@@ -1,15 +1,38 @@
+html {
+    text-align: center;
+}
+
 body {
     background: #EEEEEE;
+    width:60%;
+    margin-left:auto;
+    margin-right:auto;
 }
+
+
+.name-text {
+    color: midnightblue;
+}
+
+table {
+    width: 100%;
+    text-align: left;
+}
+
+td {
+    padding: 5px 15px;
+    max-width: 50%;
+}
+
+th {
+    padding: 5px 15px;
+    background: midnightblue;
+    color: white;
+}
+
+tr:nth-child(even) {background: #CCC}
+tr:nth-child(odd) {background: #FFF}
 
 .twitter-searchbox {
     position: middle;
 }
-.twitter-area {
-    background: #EEEEEE;
-    height: 100%;
-    position: absolute;
-    text-align: center;
-    width: 100%;
-}
-
