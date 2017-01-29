@@ -9,15 +9,15 @@ for (var n of col) {
     var val = Number(n.innerHTML);
     if (val <= 0.5)
     {
-        r = Math.floor(255 * (1 - val));
+        r = Math.floor(255 * val*2);
         g = 255;
-        b = Math.floor(255 * (1 - val));
+        b = Math.floor(255 * val*2);
     }
     else
     {
         r = 255;
-        g = Math.floor(val * 255);
-        b = Math.floor(val * 255);
+        g = Math.floor((1 - (val - 0.5) * 2) * 255);
+        b = Math.floor((1 - (val - 0.5) * 2) * 255);
     }
 
     var color = 'rgb(' + r + ',' + g + ',' + b + ')';
@@ -55,15 +55,15 @@ for (var n of joys) {
     var val = Number(n.innerHTML);
     if (val >= 0.5)
     {
-        r = Math.floor(255 * (1 - val));
+        r = Math.floor((1 -((val - 0.5) * 2)) * 255);
         g = 255;
-        b = Math.floor(255 * (1 - val));
+        b = Math.floor((1 -((val - 0.5) * 2)) * 255);
     }
     else
     {
         r = 255;
-        g = Math.floor(val * 255);
-        b = Math.floor(val * 255);
+        g = Math.floor(val*2 * 255);
+        b = Math.floor(val*2 * 255);
     }
 
     var color = 'rgb(' + r + ',' + g + ',' + b + ')';
