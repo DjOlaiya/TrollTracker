@@ -3,6 +3,7 @@
 <html>
 <head>
     <% include ./partials/head %>
+
 </head>
 
 <body>
@@ -23,7 +24,7 @@
         <% for (var i = 0; i < data.length; i++) { %>
         <tr>
             <td><%= data[i].text %></td>
-            <td><%= data[i].score.results.cyberbullying.likelihood %></td>
+            <td><%= data[i].score %></td>
         </tr>
         <% } %>
     </table>
@@ -44,16 +45,17 @@
         <% var person = analysis.person[i] %>
         <tr>
             <td><%= person.name %></td>
-            <td><%= person.sentiment %></td>
-            <td><%= person.relevance %></td>
-            <td><%= person.emotions.anger %></td>
-            <td><%= person.emotions.disgust %></td>
-            <td><%= person.emotions.fear %></td>
-            <td><%= person.emotions.joy %></td>
-            <td><%= person.emotions.sadness %></td>
+            <td class="num-cell-fullrange"><%= person.sentiment %></td>
+            <td class="num-cell"><%= person.relevance %></td>
+            <td class="num-cell"><%= person.emotions.anger %></td>
+            <td class="num-cell"><%= person.emotions.disgust %></td>
+            <td class="num-cell"><%= person.emotions.fear %></td>
+            <td class="joy"><%= person.emotions.joy %></td>
+            <td class="num-cell"><%= person.emotions.sadness %></td>
         </tr>
         <% } %>
     </table>
 </div>
+<script src="assets/colortable.js"></script>
 </body>
 </html>
