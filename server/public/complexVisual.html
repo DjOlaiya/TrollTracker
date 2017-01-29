@@ -6,7 +6,7 @@ This is just a practice page. tried to link the visual through here but no luck.
 <html>
 	<head>
 		<meta charset="utf-8">
-		<script type="text/javascript" src="d3.min.js"></script>
+		<script type="text/javascript" src="assets/d3.min.js"></script>
 </head>
 
 
@@ -46,13 +46,13 @@ var width = 960,
     height = 700,
     radius = Math.min(width, height) / 2;
 
-var x = d3.scale.linear()
+var x = d3.scaleLinear()
     .range([0, 2 * Math.PI]);
 
-var y = d3.scale.sqrt()
+var y = d3.scaleSqrt()
     .range([0, radius]);
 
-var color = d3.scale.category20c();
+var color = d3.schemeCategory20c;
 
 var svg = d3.select("body").append("svg")
     .attr("width", width)
@@ -60,9 +60,8 @@ var svg = d3.select("body").append("svg")
   .append("g")
     .attr("transform", "translate(" + width / 2 + "," + (height / 2 + 10) + ")");
 
-var partition = d3.layout.partition()
-    .sort(null)
-    .value(function(d) { return 1; });
+var partition = d3.partition()
+    .pack(root.sort(1));
 
 var arc = d3.svg.arc()
     .startAngle(function(d) { return Math.max(0, Math.min(2 * Math.PI, x(d.x))); })
