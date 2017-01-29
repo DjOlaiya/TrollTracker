@@ -13,6 +13,7 @@ function analyze_text(text) {
 }
 
 function request_analysis(a_text) {
+  return require("./delete2.json");
   var parameters = {
     sentiment: 1,
     emotion: 1,
