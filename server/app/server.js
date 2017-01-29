@@ -35,7 +35,7 @@ app.get('/:s', function(req, res) {
     var options = {
         screen_name: req.params.s,
         exclude_replies: true,
-        count: 10
+        count: 200
     };
 
     var ret = [];
@@ -55,14 +55,33 @@ app.get('/:s', function(req, res) {
             }));
         }
 
-        var obj = analyze.analyze_text('a block of tweets');
+        var tweets = extract_tweets(data);
 
-        Promise.all(arr).then(function() {
-            //res.json(obj);
-            res.render('results.ejs', {name: name, data: fin, analysis: obj})
+        //modify options
+        options.count = 150;
+        options.sinceid = data[data.length - 1].id;
+        client.get('statuses/user_timeline', options, function(err, data) {
+
+            tweets += extract_tweets(data);
+            console.log(tweets);
+            var obj = analyze.analyze_text(tweets);
+
+            Promise.all(arr).then(function() {
+                //res.json(obj);
+                res.render('results.ejs', {name: name, data: fin, analysis: obj})
+            });
+
         });
     });
 
 });
+
+function extract_tweets(data) {
+    var tweets = "";
+    for (var i = 0; i < data.length; i++) {
+        tweets += data[i].text + "\n";
+    }
+    return tweets;
+}
 
 module.exports = app;

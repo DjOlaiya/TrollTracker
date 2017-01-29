@@ -31,23 +31,7 @@ function request_analysis(a_text) {
 
 function extract_analysis(text_json) {
   var obj = {score:null, pos:0, neut:0, neg:0, person:[]};
-
-  /*
-  var obj = {score:null, pos:0, neut:0, neg:0,
-    sentiment:[],
-    relevance:[],
-    count:[],
-    person:[],
-    emotions:{
-      anger:[],
-      disgust:[],
-      fear:[],
-      joy:[],
-      sadness:[]
-    }
-  };
-  */
-
+  
   for (var i = 0, j = 0; i < text_json.entities.length; i++) {
     var entity = text_json.entities[i];
     if (entity.type == "Person") {
@@ -63,7 +47,6 @@ function extract_analysis(text_json) {
           obj.pos++;
           break;
       }
-      console.log(entity.text);
       var person = {};
       person.name = entity.text;
       person.sentiment = entity.sentiment.type != "neutral" ? Number(entity.sentiment.score) : 0;
@@ -76,22 +59,6 @@ function extract_analysis(text_json) {
       person.emotions.joy     = Number(entity.emotions.joy);
       person.emotions.sadness = Number(entity.emotions.sadness);
 
-
-      /*
-
-      obj.sentiment[j] = entity.sentiment.type != "neutral" ? Number(entity.sentiment.score) : 0;
-      obj.relevance[j] = Number(entity.relevance);
-      obj.count[j]     = Number(entity.count);
-      obj.person[j]    = entity.text;
-
-      obj.emotions.anger[j]   = Number(entity.emotions.anger);
-      obj.emotions.disgust[j] = Number(entity.emotions.disgust);
-      obj.emotions.fear[j]    = Number(entity.emotions.fear);
-      obj.emotions.joy[j]     = Number(entity.emotions.joy);
-      obj.emotions.sadness[j] = Number(entity.emotions.sadness);
-      j++;
-      */
-
       obj.person.push(person);
     }
   }
@@ -101,5 +68,6 @@ function extract_analysis(text_json) {
     score += obj.person[i].sentiment;
   score /= obj.person.length;
   obj.score = score;
+
   return obj;
 }
