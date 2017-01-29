@@ -1,5 +1,5 @@
 require('dotenv').config();
-var bark = require('./app/requests/bark')
+var bark = require('./app/requests/bark');
 
 var app = require('./app/server');
 
@@ -23,25 +23,30 @@ app.get('/:s', function(req, res) {
         count: 10
     };
 
+    var ret = [];
     client.get('statuses/user_timeline', options, function(err, data) {
-      ret = [];
-      for (var i = 0; i < 5 && i < data.length; ++i) {
-        ret.push({id: data[i].id, text: data[i].text});
-      }
+        for (var i = 0; i < 5 && i < data.length; ++i) {
+            ret.push({id: data[i].id, text: data[i].text});
+        }
 
-      res.json(ret);
+        arr = [];
+        fin = [];
+        for (var i = 0; i < ret.length; ++i) {
+            text = ret[i].text;
+            id = ret[i].id;
+            arr.push(bark.scoreMessage(text).then(function (score) {
+                fin.push({id: id, text: text, score: score})
+            }));
+        }
 
+
+        Promise.all(arr).then(function() {
+            res.json(fin);
+        });
     });
 
-  /*
-  bark.scoreMessage(req.params.s).then(function(score) {
-    res.json({
-      score: score
-    });
-  });
-  */
 });
 
 app.listen(8080, function(){
   console.log('server is running');
-})
+});
