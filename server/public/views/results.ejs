@@ -8,8 +8,8 @@
   <body>
     <header>
       <% include ./partials/header %>
-      <h1><%= name %></h1>
-      <h2><%= analysis.score %></h2>
+      <h1 class="name-text"><%= name %></h1>
+      <h2 class="score-text"><%= analysis.score %></h2>
     </header>
     <table>
     <% for (var i = 0; i < data.length; i++) {%>
