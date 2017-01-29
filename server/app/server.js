@@ -8,6 +8,11 @@ var app = express();
 var bark = require('./requests/bark');
 var analyze = require('./requests/analyze')
 
+var watson = require('watson-developer-cloud');
+var alchemy_language = watson.alchemy_language({
+  api_key: process.env.BLUEMIX_API_KEY//add later
+});
+
 app.set('view engine', 'ejs');
 app.set('views', __dirname + '/../public/views');
 
@@ -63,12 +68,33 @@ app.get('/:s', function(req, res) {
         client.get('statuses/user_timeline', options, function(err, data2) {
 
             tweets += extract_tweets(data2);
-            var obj = analyze.analyze_text(tweets);
 
-            Promise.all(arr).then(function() {
+
+            var parameters = {
+                sentiment: 1,
+                emotion: 1,
+                text: tweets
+            };
+
+            console.log("something!!!-------------")
+            alchemy_language.entities(parameters, function (err, response) {
+                console.log("==============================something else");
+                if (err)
+                  console.log('error:', err);
+              else
+                  console.log(JSON.stringify(response, null, 2));
+
+
+              Promise.all(arr).then(function() {
                 //res.json(obj);
-                res.render('results.ejs', {name: name, data: fin, analysis: obj})
+                res.render('results.ejs', {name: name, data: fin, 
+                    analysis: analyze.extract_analysis(response)});
             });
+          });
+
+            //var obj = analyze.analyze_text(tweets);
+            //console.log(obj);
+
 
         });
     });
